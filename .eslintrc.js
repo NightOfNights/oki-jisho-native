@@ -22,6 +22,7 @@ module.exports = {
   rules: {
     'no-unused-vars': 'warn',
     'react/prop-types': 'warn',
+    'react/display-name': 'off',
     quotes: [2, 'single', { avoidEscape: true }],
     semi: 'error',
     'react-hooks/rules-of-hooks': 'error',
