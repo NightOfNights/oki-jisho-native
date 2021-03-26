@@ -6,7 +6,7 @@ const VocabularyScreen = () => {
 
   return (
     <View style={viewStyle}>
-      <Text>Settings!</Text>
+      <Text>Vocabulary!</Text>
     </View>
   );
 };

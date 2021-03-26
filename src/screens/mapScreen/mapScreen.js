@@ -6,7 +6,7 @@ const MapScreen = () => {
 
   return (
     <View style={viewStyle}>
-      <Text>Settings!</Text>
+      <Text>Map!</Text>
     </View>
   );
 };

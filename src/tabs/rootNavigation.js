@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {
   HomeScreen,
@@ -8,10 +9,12 @@ import {
   MapScreen,
   SearchScreen,
   VocabularyScreen,
+  SearchResultScreen,
 } from '../screens';
 import { greenColor } from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const tabBarOptions = {
   activeTintColor: greenColor,
@@ -39,6 +42,15 @@ const screenOptions = ({ route }) => ({
   },
 });
 
+const SearchNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Find" component={SearchScreen} />
+      <Stack.Screen name="Result" component={SearchResultScreen} />
+    </Stack.Navigator>
+  );
+};
+
 const RootNavigation = () => {
   return (
     <NavigationContainer>
@@ -46,7 +58,7 @@ const RootNavigation = () => {
         tabBarOptions={tabBarOptions}
         screenOptions={screenOptions}
       >
-        <Tab.Screen name="Search" component={SearchScreen} />
+        <Tab.Screen name="Search" component={SearchNavigator} />
         <Tab.Screen name="Vocabulary" component={VocabularyScreen} />
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 
-const HomeScreen = () => {
+const SearchResultScreen = () => {
   const viewStyle = { flex: 1, justifyContent: 'center', alignItems: 'center' };
 
   return (
@@ -11,4 +11,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default SearchResultScreen;
