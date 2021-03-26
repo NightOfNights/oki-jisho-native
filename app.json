@@ -1,5 +1,6 @@
 {
   "expo": {
+    "entryPoint": "./src/App.js",
     "name": "oki-jisho-native",
     "slug": "oki-jisho-native",
     "version": "1.0.0",
