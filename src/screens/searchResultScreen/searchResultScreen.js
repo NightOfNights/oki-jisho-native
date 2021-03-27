@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { getWordDefinitions } from '../../api/apiRequests';
-import { greenColor } from '../../constants/colors';
+import { lightGreen } from '../../constants/colors';
 
 const SearchResultScreen = ({ route }) => {
   const { searchQuery } = route.params || '';
@@ -29,7 +29,7 @@ const SearchResultScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <Text>{searchQuery ? searchQuery : 'Home!'}</Text>
-      {loading ? <ActivityIndicator size="large" color={greenColor} /> : words}
+      {loading ? <ActivityIndicator size="large" color={lightGreen} /> : words}
     </View>
   );
 };

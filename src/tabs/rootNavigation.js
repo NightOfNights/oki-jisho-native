@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -11,13 +12,14 @@ import {
   VocabularyScreen,
   SearchResultScreen,
 } from '../screens';
-import { greenColor } from '../constants/colors';
+import { lightGreen } from '../constants/colors';
+import { ThemeContext } from '../providers/themeProvider';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const tabBarOptions = {
-  activeTintColor: greenColor,
+  activeTintColor: lightGreen,
 };
 
 const screenOptions = ({ route }) => ({
@@ -52,8 +54,14 @@ const SearchNavigator = () => {
 };
 
 const RootNavigation = () => {
+  const { theme } = React.useContext(ThemeContext);
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={theme.navigation}>
+      <StatusBar
+        backgroundColor={theme.statusBarBackground}
+        barStyle={theme.statusBarText}
+      />
       <Tab.Navigator
         tabBarOptions={tabBarOptions}
         screenOptions={screenOptions}

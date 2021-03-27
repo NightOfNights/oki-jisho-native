@@ -8,10 +8,15 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { basicWhite } from '../../constants/colors';
+import { ThemeContext } from '../../providers/themeProvider';
+import { ThemedText } from '../../components';
 
 const SearchScreen = ({ navigation }) => {
   const [searchInput, onSearchInputChange] = React.useState('');
   const [test, setTest] = React.useState('false');
+
+  const { toggleTheme } = React.useContext(ThemeContext);
 
   const handleSubmitEditing = () => {
     setTest((prev) => !prev);
@@ -38,15 +43,16 @@ const SearchScreen = ({ navigation }) => {
           <Button title="Clear history" />
         </View>
         <Button title="test" onPress={() => navigation.navigate('Result')} />
-        <Text>{test ? '1' : '3'}</Text>
-        <Text>Search!</Text>
+        <Button title="toggle" onPress={() => toggleTheme()} />
+        <ThemedText value={test ? '1' : '3'} />
+        <ThemedText value="Search!" />
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', paddingTop: 25 },
+  container: { flex: 1, alignItems: 'center' },
   searchInput: {
     alignSelf: 'stretch',
     height: 40,
@@ -54,6 +60,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderRadius: 3,
+    backgroundColor: basicWhite,
   },
   clearButton: { alignSelf: 'stretch', paddingHorizontal: 12 },
 });
