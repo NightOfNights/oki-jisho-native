@@ -10,7 +10,19 @@ import {
 } from 'react-native';
 
 const SearchScreen = ({ navigation }) => {
+  const [searchInput, onSearchInputChange] = React.useState('');
   const [test, setTest] = React.useState('false');
+
+  const handleSubmitEditing = () => {
+    setTest((prev) => !prev);
+    console.log(searchInput);
+
+    if (searchInput) {
+      navigation.navigate('Result', {
+        searchQuery: searchInput,
+      });
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -18,7 +30,8 @@ const SearchScreen = ({ navigation }) => {
         <TextInput
           style={styles.searchInput}
           placeholder="English, Japanese, Romaji, words or text"
-          onSubmitEditing={() => setTest((prev) => !prev)}
+          onSubmitEditing={handleSubmitEditing}
+          onChangeText={onSearchInputChange}
           onBlur={() => Keyboard.dismiss}
         />
         <View style={styles.clearButton}>

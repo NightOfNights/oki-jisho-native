@@ -6,6 +6,7 @@ const SettingsScreen = () => {
 
   return (
     <View style={viewStyle}>
+      <Text>Theme</Text>
       <Text>Settings!</Text>
     </View>
   );
