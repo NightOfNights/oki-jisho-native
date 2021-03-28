@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { Text } from 'react-native';
-import { ThemeContext } from '../../providers/themeProvider';
 
-const ThemedText = ({ value }) => {
-  const { theme } = React.useContext(ThemeContext);
-
-  const textStyle = { color: theme.text };
+const ThemedText = ({ value, color }) => {
+  const textStyle = { color };
 
   return <Text style={textStyle}>{value}</Text>;
 };

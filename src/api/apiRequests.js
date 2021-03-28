@@ -1,10 +1,7 @@
 import axios from './axiosConfig';
 
 export async function getWordDefinitions(word) {
-  const wordDefinitions = axios
-    .get(`/${word}`)
-    .then((res) => res.data)
-    .catch((err) => console.error(err.message));
-
-  return wordDefinitions;
+  const { data } = await axios.get(`/${word}`);
+  console.log(data, 'asd');
+  return data;
 }

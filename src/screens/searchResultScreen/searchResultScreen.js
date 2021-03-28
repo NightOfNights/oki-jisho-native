@@ -2,34 +2,36 @@ import * as React from 'react';
 import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { getWordDefinitions } from '../../api/apiRequests';
 import { lightGreen } from '../../constants/colors';
+import { useQuery } from 'react-query';
 
 const SearchResultScreen = ({ route }) => {
   const { searchQuery } = route.params || '';
-  const [searchResults, setSearchResults] = React.useState([]);
-  const [loading, setLoading] = React.useState(
-    searchQuery && searchQuery.length > 0
+
+  const { isLoading, error, data } = useQuery(
+    ['wordDefinitions', searchQuery],
+    getWordDefinitions
   );
 
-  React.useEffect(() => {
-    if (searchQuery) {
-      const wordDefinitions = getWordDefinitions(searchQuery);
-      wordDefinitions.then((result) => {
-        setSearchResults(result);
-        setLoading(false);
-      });
-    }
-  }, []);
+  const words = data
+    ? data.map((searchResult, idx) => (
+        <Text
+          key={idx}
+        >{`${searchResult.slug} ${searchResult.japanese[0].reading}`}</Text>
+      ))
+    : [];
 
-  const words = searchResults.map((searchResult, idx) => (
-    <Text
-      key={idx}
-    >{`${searchResult.slug} ${searchResult.japanese[0].reading}`}</Text>
-  ));
+  if (error) {
+    return <Text>Error</Text>;
+  }
 
   return (
     <View style={styles.container}>
       <Text>{searchQuery ? searchQuery : 'Home!'}</Text>
-      {loading ? <ActivityIndicator size="large" color={lightGreen} /> : words}
+      {isLoading ? (
+        <ActivityIndicator size="large" color={lightGreen} />
+      ) : (
+        words
+      )}
     </View>
   );
 };

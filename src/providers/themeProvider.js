@@ -6,7 +6,6 @@ const darkThemeNavigation = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#17BF63',
     background: darkBlue,
     text: basicWhite,
     border: darkBlue,
