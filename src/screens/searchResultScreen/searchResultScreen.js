@@ -9,7 +9,7 @@ const SearchResultScreen = ({ route }) => {
 
   const { isLoading, error, data } = useQuery(
     ['wordDefinitions', searchQuery],
-    getWordDefinitions
+    () => getWordDefinitions(searchQuery)
   );
 
   const words = data
