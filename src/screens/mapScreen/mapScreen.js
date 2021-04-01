@@ -10,7 +10,7 @@ const MapScreen = () => {
       <Image
         source={{
           uri:
-            'https://psv4.userapi.com/c856336/u81226711/docs/d18/ec615a3bf763/hpmhwmks4zy51.jpg?extra=3mx8_8AfAIjOFcpVIukaNL7Euu_Xsd-r69-nZP918mpg89tEd-Cy8JmGn33L1lq_n3MznkAsDYJ8C93u8L3Ennq0HXWjE-fTngNHcRA7QA2tUCkJYuxFUMm5jbCKQKS8sPM-9suP4mwXVv475yBU',
+            'https://memepedia.ru/wp-content/uploads/2020/10/big-floppa-meme.png',
         }}
         style={styles.mapPlaceholder}
       />
