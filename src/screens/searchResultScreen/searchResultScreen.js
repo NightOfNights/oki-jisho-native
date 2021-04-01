@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { getWordDefinitions } from '../../api/apiRequests';
 import { lightGreen } from '../../constants/colors';
 import { useQuery } from 'react-query';
+import { WordDefinition } from '../../components';
 
 const SearchResultScreen = ({ route }) => {
   const { searchQuery } = route.params || '';
@@ -26,12 +27,14 @@ const SearchResultScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
+      <Text>Words</Text>
       <Text>{searchQuery ? searchQuery : 'Home!'}</Text>
       {isLoading ? (
         <ActivityIndicator size="large" color={lightGreen} />
       ) : (
         words
       )}
+      <WordDefinition />
     </View>
   );
 };
@@ -39,5 +42,5 @@ const SearchResultScreen = ({ route }) => {
 export default SearchResultScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  container: { flex: 1 },
 });
