@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DefaultTheme } from '@react-navigation/native';
-import { darkBlue, basicWhite, basicBlack } from '../constants/colors';
+import { darkBlue, basicWhite, basicBlack, darkTag } from '../constants/colors';
 
 const darkThemeNavigation = {
   ...DefaultTheme,
@@ -21,12 +21,14 @@ const themes = {
     statusBarText: 'dark-content',
     text: basicBlack,
     navigation: lightThemeNavigation,
+    tagColor: darkTag,
   },
   dark: {
     statusBarBackground: darkBlue,
     statusBarText: 'default',
     text: basicWhite,
     navigation: darkThemeNavigation,
+    tagColor: darkTag,
   },
 };
 

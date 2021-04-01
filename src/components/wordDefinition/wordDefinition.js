@@ -2,11 +2,17 @@ import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import ThemedText from '../themedText/themedText';
 import { gray, basicWhite } from '../../constants/colors';
+import ThemedTag from '../themedTag/themedTag';
 
-const WordDefinition = ({ japanese, jlpt, senses, textColor }) => {
+const WordDefinition = ({
+  japanese,
+  common,
+  jlpt,
+  senses,
+  textColor,
+  tagColor,
+}) => {
   const { word, reading } = japanese;
-
-  const jlptTags = jlpt.map((jlptTag, idx) => <Text key={idx}>{jlptTag}</Text>);
 
   const definitionList = senses.map((sense, idx) => {
     const englishDefinitions = sense.english_definitions.join('; ');
@@ -49,7 +55,14 @@ const WordDefinition = ({ japanese, jlpt, senses, textColor }) => {
                 : { ...styles.wordText, ...styles.leftContentText }
             }
           />
-          {jlptTags}
+          <View style={styles.tags}>
+            {jlpt.length ? (
+              <ThemedTag value={jlpt[0]} tagColor={tagColor} />
+            ) : undefined}
+            {common ? (
+              <ThemedTag value="common word" tagColor={tagColor} />
+            ) : undefined}
+          </View>
         </View>
       </View>
       <View style={styles.rightContent}>
@@ -75,10 +88,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   wordText: {
-    fontSize: 18,
+    fontSize: 20,
   },
   readingText: {
-    fontSize: 12,
+    fontSize: 13,
   },
   leftContentText: {
     textAlign: 'center',
@@ -101,6 +114,11 @@ const styles = StyleSheet.create({
   infoText: {
     color: gray,
     fontSize: 12,
+  },
+  tags: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
   },
 });
 

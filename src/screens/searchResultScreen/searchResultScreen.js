@@ -26,9 +26,11 @@ const SearchResultScreen = ({ route }) => {
         <WordDefinition
           key={idx}
           japanese={searchResult.japanese[0]}
+          common={searchResult.is_common}
           jlpt={searchResult.jlpt}
           senses={searchResult.senses}
           textColor={theme.text}
+          tagColor={theme.tagColor}
         />
       ))
     : [];
