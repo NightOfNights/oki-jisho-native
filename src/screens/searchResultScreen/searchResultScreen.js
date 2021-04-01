@@ -1,12 +1,20 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
 import { getWordDefinitions } from '../../api/apiRequests';
 import { lightGreen } from '../../constants/colors';
 import { useQuery } from 'react-query';
-import { WordDefinition } from '../../components';
+import { ThemedText, WordDefinition } from '../../components';
+import { ThemeContext } from '../../providers/themeProvider';
 
 const SearchResultScreen = ({ route }) => {
   const { searchQuery } = route.params || '';
+  const { theme } = React.useContext(ThemeContext);
 
   const { isLoading, error, data } = useQuery(
     ['wordDefinitions', searchQuery],
@@ -15,9 +23,13 @@ const SearchResultScreen = ({ route }) => {
 
   const words = data
     ? data.map((searchResult, idx) => (
-        <Text
+        <WordDefinition
           key={idx}
-        >{`${searchResult.slug} ${searchResult.japanese[0].reading}`}</Text>
+          japanese={searchResult.japanese[0]}
+          jlpt={searchResult.jlpt}
+          senses={searchResult.senses}
+          textColor={theme.text}
+        />
       ))
     : [];
 
@@ -27,20 +39,47 @@ const SearchResultScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Words</Text>
-      <Text>{searchQuery ? searchQuery : 'Home!'}</Text>
+      <ThemedText
+        value={`Search: ${searchQuery} `}
+        color={theme.text}
+        style={styles.searchQueryText}
+      />
       {isLoading ? (
-        <ActivityIndicator size="large" color={lightGreen} />
+        <View style={styles.loadingIndicatior}>
+          <ActivityIndicator size="large" color={lightGreen} />
+        </View>
+      ) : words.length ? (
+        <React.Fragment>
+          <ScrollView>{words}</ScrollView>
+        </React.Fragment>
       ) : (
-        words
+        <View style={styles.noDefinitions}>
+          <ThemedText
+            value="Definitions not found!"
+            color={theme.text}
+            style={styles.noDefinitionsText}
+          />
+        </View>
       )}
-      <WordDefinition />
     </View>
   );
 };
 
-export default SearchResultScreen;
-
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  loadingIndicatior: {
+    justifyContent: 'center',
+    height: '90%',
+  },
+  searchQueryText: { fontSize: 20, marginLeft: 10, marginVertical: 5 },
+  noDefinitions: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '80%',
+  },
+  noDefinitionsText: {
+    fontSize: 18,
+  },
 });
+
+export default SearchResultScreen;
