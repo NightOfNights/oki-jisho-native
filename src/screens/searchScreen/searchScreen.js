@@ -15,7 +15,7 @@ const SearchScreen = ({ navigation }) => {
   const [searchInput, onSearchInputChange] = React.useState('');
   const [test, setTest] = React.useState('false');
 
-  const { theme, toggleTheme } = React.useContext(ThemeContext);
+  const { theme } = React.useContext(ThemeContext);
 
   const handleSubmitEditing = () => {
     setTest((prev) => !prev);
@@ -42,7 +42,6 @@ const SearchScreen = ({ navigation }) => {
           <Button title="Clear history" />
         </View>
         <Button title="test" onPress={() => navigation.navigate('Result')} />
-        <Button title="toggle" onPress={toggleTheme} />
         <ThemedText value={test ? '1' : '3'} color={theme.text} />
         <ThemedText value="Search!" color={theme.text} />
       </View>

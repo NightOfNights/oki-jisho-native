@@ -43,13 +43,25 @@ export const ThemeContext = React.createContext(null);
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = React.useState(themes.light);
   const [themeName, setThemeName] = React.useState('light');
-  const toggleTheme = () => {
-    if (themeName === 'dark') {
-      setTheme(themes.light);
-      setThemeName('light');
+  const toggleTheme = (themeValue) => {
+    if (themeValue === 'dark' || themeValue === 'light') {
+      if (themeValue === 'dark') {
+        console.log('dark1');
+        setTheme(themes.dark);
+        setThemeName('dark');
+      } else {
+        console.log('light1');
+        setTheme(themes.light);
+        setThemeName('light');
+      }
     } else {
-      setTheme(themes.dark);
-      setThemeName('dark');
+      if (themeName === 'dark') {
+        setTheme(themes.light);
+        setThemeName('light');
+      } else {
+        setTheme(themes.dark);
+        setThemeName('dark');
+      }
     }
   };
 
