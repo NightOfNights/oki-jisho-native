@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: '90%',
   },
-  searchQueryText: { fontSize: 20, marginLeft: 10, marginVertical: 5 },
+  searchQueryText: { fontSize: 20, marginLeft: 10, marginVertical: 10 },
   noDefinitions: {
     alignItems: 'center',
     justifyContent: 'center',
