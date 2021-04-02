@@ -6,27 +6,51 @@ import {
   Button,
   Keyboard,
   TouchableWithoutFeedback,
+  ScrollView,
+  TouchableOpacity,
 } from 'react-native';
-import { basicWhite, textInputBorderShadow } from '../../constants/colors';
+import {
+  basicWhite,
+  textInputBorderShadow,
+  lightGreen,
+} from '../../constants/colors';
 import { ThemeContext } from '../../providers/themeProvider';
 import { ThemedText } from '../../components';
 
 const SearchScreen = ({ navigation }) => {
   const [searchInput, onSearchInputChange] = React.useState('');
-  const [test, setTest] = React.useState('false');
 
   const { theme } = React.useContext(ThemeContext);
 
+  const navigateToResult = (query) => {
+    navigation.navigate('Result', {
+      searchQuery: query,
+    });
+  };
+
   const handleSubmitEditing = () => {
-    setTest((prev) => !prev);
     console.log(searchInput);
 
     if (searchInput) {
-      navigation.navigate('Result', {
-        searchQuery: searchInput,
-      });
+      navigateToResult(searchInput);
     }
   };
+
+  const testData = [
+    { query: 'neko', date: '2021-04-02' },
+    { query: '首相', date: '2021-04-02' },
+  ];
+
+  const searchHistory = testData.map((searchHistoryItem, idx) => (
+    <TouchableOpacity
+      key={idx}
+      style={styles.searchHistory}
+      onPress={() => navigateToResult(searchHistoryItem.query)}
+    >
+      <ThemedText value={searchHistoryItem.query} color={theme.text} />
+      <ThemedText value={searchHistoryItem.date} color={theme.text} />
+    </TouchableOpacity>
+  ));
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -38,19 +62,17 @@ const SearchScreen = ({ navigation }) => {
           onChangeText={onSearchInputChange}
           onBlur={() => Keyboard.dismiss}
         />
-        <View style={styles.clearButton}>
-          <Button title="Clear history" />
+        <View style={styles.clearButtonView}>
+          <Button title="Clear history" color={lightGreen} />
         </View>
-        <Button title="test" onPress={() => navigation.navigate('Result')} />
-        <ThemedText value={test ? '1' : '3'} color={theme.text} />
-        <ThemedText value="Search!" color={theme.text} />
+        <ScrollView>{searchHistory}</ScrollView>
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center' },
+  container: { flex: 1 },
   searchInput: {
     alignSelf: 'stretch',
     height: 40,
@@ -62,7 +84,20 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
   },
-  clearButton: { alignSelf: 'stretch', paddingHorizontal: 12 },
+  clearButtonView: {
+    alignSelf: 'stretch',
+    paddingHorizontal: 12,
+    marginBottom: 10,
+  },
+  searchHistory: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    borderTopWidth: 1,
+    borderColor: basicWhite,
+    paddingVertical: 15,
+  },
 });
 
 export default SearchScreen;
