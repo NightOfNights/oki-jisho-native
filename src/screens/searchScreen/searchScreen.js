@@ -4,10 +4,10 @@ import {
   TextInput,
   View,
   Button,
-  Keyboard,
-  TouchableWithoutFeedback,
   ScrollView,
   TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {
   basicWhite,
@@ -60,7 +60,6 @@ const SearchScreen = ({ navigation }) => {
           placeholder="English, Japanese, Romaji, words or text"
           onSubmitEditing={handleSubmitEditing}
           onChangeText={onSearchInputChange}
-          onBlur={() => Keyboard.dismiss}
         />
         <View style={styles.clearButtonView}>
           <Button title="Clear history" color={lightGreen} />
