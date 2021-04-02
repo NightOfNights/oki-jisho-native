@@ -1,6 +1,6 @@
 {
   "expo": {
-    "entryPoint": "./src/App.js",
+    "entryPoint": "./src/app.js",
     "name": "oki-jisho-native",
     "slug": "oki-jisho-native",
     "version": "1.0.0",
@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
