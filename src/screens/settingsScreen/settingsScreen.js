@@ -6,8 +6,8 @@ import { Picker } from '@react-native-picker/picker';
 import { basicWhite, gray, transparent } from '../../constants/colors';
 
 const SettingsScreen = () => {
-  const [settingsTheme, setSettingsTheme] = React.useState('Light');
-  const { theme, toggleTheme } = React.useContext(ThemeContext);
+  const { theme, themeName, toggleTheme } = React.useContext(ThemeContext);
+  const [settingsTheme, setSettingsTheme] = React.useState(themeName);
 
   const handlePickerValueChange = (value) => {
     if (value !== settingsTheme) {

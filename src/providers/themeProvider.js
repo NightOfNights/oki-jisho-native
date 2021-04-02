@@ -46,11 +46,9 @@ export const ThemeProvider = ({ children }) => {
   const toggleTheme = (themeValue) => {
     if (themeValue === 'dark' || themeValue === 'light') {
       if (themeValue === 'dark') {
-        console.log('dark1');
         setTheme(themes.dark);
         setThemeName('dark');
       } else {
-        console.log('light1');
         setTheme(themes.light);
         setThemeName('light');
       }
@@ -66,7 +64,13 @@ export const ThemeProvider = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        themeName: themeName.charAt(0).toUpperCase() + themeName.slice(1),
+        toggleTheme,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
