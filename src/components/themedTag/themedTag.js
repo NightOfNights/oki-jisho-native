@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { lightGreen } from '../../constants/colors';
+import { View, Text } from 'react-native';
+import styles from './styles';
 
 const Tag = ({ value, tagColor }) => {
   return (
@@ -9,18 +9,5 @@ const Tag = ({ value, tagColor }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: 15,
-    paddingHorizontal: 10,
-    marginTop: 3,
-  },
-  tagText: {
-    color: lightGreen,
-    textAlign: 'center',
-    fontSize: 12,
-  },
-});
 
 export default Tag;

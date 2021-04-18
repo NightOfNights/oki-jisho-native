@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { ThemedText } from '../../components';
 import { ThemeContext } from '../../providers/themeProvider';
 import { Picker } from '@react-native-picker/picker';
-import { basicWhite, gray, transparent } from '../../constants/colors';
+import styles from './styles';
 
 const SettingsScreen = () => {
   const { theme, themeName, toggleTheme } = React.useContext(ThemeContext);
@@ -42,25 +42,5 @@ const SettingsScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  settingsText: { fontSize: 20, marginVertical: 10, marginLeft: 10 },
-  settingsCard: {
-    borderColor: basicWhite,
-    borderTopWidth: 1,
-    paddingLeft: 12,
-    paddingTop: 10,
-  },
-  settingsName: {
-    fontSize: 16,
-  },
-  picker: {
-    height: 40,
-    width: '100%',
-    color: gray,
-    backgroundColor: transparent,
-  },
-});
 
 export default SettingsScreen;

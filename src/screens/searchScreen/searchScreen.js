@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  StyleSheet,
   TextInput,
   View,
   Button,
@@ -9,13 +8,10 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {
-  basicWhite,
-  textInputBorderShadow,
-  lightGreen,
-} from '../../constants/colors';
+import { lightGreen } from '../../constants/colors';
 import { ThemeContext } from '../../providers/themeProvider';
 import { ThemedText } from '../../components';
+import styles from './styles';
 
 const SearchScreen = ({ navigation }) => {
   const [searchInput, onSearchInputChange] = React.useState('');
@@ -69,34 +65,5 @@ const SearchScreen = ({ navigation }) => {
     </TouchableWithoutFeedback>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  searchInput: {
-    alignSelf: 'stretch',
-    height: 40,
-    margin: 12,
-    paddingHorizontal: 10,
-    borderRadius: 3,
-    backgroundColor: basicWhite,
-    shadowColor: textInputBorderShadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-  },
-  clearButtonView: {
-    alignSelf: 'stretch',
-    paddingHorizontal: 12,
-    marginBottom: 10,
-  },
-  searchHistory: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 15,
-    borderTopWidth: 1,
-    borderColor: basicWhite,
-    paddingVertical: 15,
-  },
-});
 
 export default SearchScreen;

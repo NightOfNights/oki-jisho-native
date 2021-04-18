@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image } from 'react-native';
+import styles from './styles';
 
 const MapScreen = () => {
   const viewStyle = { flex: 1, justifyContent: 'center', alignItems: 'center' };
@@ -17,9 +18,5 @@ const MapScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  mapPlaceholder: { flex: 1, resizeMode: 'cover', width: 425 },
-});
 
 export default MapScreen;

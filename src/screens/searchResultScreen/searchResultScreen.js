@@ -1,16 +1,11 @@
 import * as React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  ScrollView,
-} from 'react-native';
+import { Text, View, ActivityIndicator, ScrollView } from 'react-native';
 import { getWordDefinitions } from '../../api/apiRequests';
 import { lightGreen } from '../../constants/colors';
 import { useQuery } from 'react-query';
 import { ThemedText, WordDefinition } from '../../components';
 import { ThemeContext } from '../../providers/themeProvider';
+import styles from './styles';
 
 const SearchResultScreen = ({ route }) => {
   const { searchQuery } = route.params || '';
@@ -66,22 +61,5 @@ const SearchResultScreen = ({ route }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  loadingIndicatior: {
-    justifyContent: 'center',
-    height: '90%',
-  },
-  searchQueryText: { fontSize: 20, marginLeft: 10, marginVertical: 10 },
-  noDefinitions: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '80%',
-  },
-  noDefinitionsText: {
-    fontSize: 18,
-  },
-});
 
 export default SearchResultScreen;
