@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  TextInput,
   View,
   Button,
   ScrollView,
@@ -10,11 +9,25 @@ import {
 } from 'react-native';
 import { lightGreen } from '../../constants/colors';
 import { ThemeContext } from '../../providers/themeProvider';
-import { ThemedText } from '../../components';
+import { ThemedText, SearchInput } from '../../components';
+import {
+  getSearchHistory,
+  updateSearchHistory,
+  clearSearchHistory,
+} from '../../storage/asyncStorage';
 import styles from './styles';
 
 const SearchScreen = ({ navigation }) => {
-  const [searchInput, onSearchInputChange] = React.useState('');
+  const [searchHistory, setSearchHistory] = React.useState([]);
+
+  async function getSearchHistoryFromAsyncStorage() {
+    const searchHistoryFromAsyncStorage = await getSearchHistory();
+    setSearchHistory(searchHistoryFromAsyncStorage);
+  }
+
+  React.useEffect(() => {
+    getSearchHistoryFromAsyncStorage();
+  }, []);
 
   const { theme } = React.useContext(ThemeContext);
 
@@ -24,43 +37,57 @@ const SearchScreen = ({ navigation }) => {
     });
   };
 
-  const handleSubmitEditing = () => {
+  const handleSubmitEditing = (searchInput) => {
     console.log(searchInput);
+    const currentDate = new Date().toISOString().slice(0, 10);
+    updateSearchHistory(
+      { query: searchInput, date: currentDate },
+      getSearchHistoryFromAsyncStorage
+    );
 
     if (searchInput) {
       navigateToResult(searchInput);
     }
   };
 
-  const testData = [
-    { query: 'neko', date: '2021-04-02' },
-    { query: '首相', date: '2021-04-02' },
-  ];
+  const handleClearSearchHistoryButtonClick = () => {
+    clearSearchHistory();
+    getSearchHistoryFromAsyncStorage();
+  };
 
-  const searchHistory = testData.map((searchHistoryItem, idx) => (
-    <TouchableOpacity
-      key={idx}
-      style={styles.searchHistory}
-      onPress={() => navigateToResult(searchHistoryItem.query)}
-    >
-      <ThemedText value={searchHistoryItem.query} color={theme.text} />
-      <ThemedText value={searchHistoryItem.date} color={theme.text} />
-    </TouchableOpacity>
-  ));
+  const searchHistoryElement = searchHistory
+    ? searchHistory.map((searchHistoryItem) => (
+        <TouchableOpacity
+          key={searchHistoryItem.query}
+          style={styles.searchHistoryWrapper}
+          activeOpacity={1}
+        >
+          <TouchableOpacity
+            onPress={() => navigateToResult(searchHistoryItem.query)}
+            style={styles.searchHistory}
+          >
+            <ThemedText value={searchHistoryItem.query} color={theme.text} />
+            <ThemedText value={searchHistoryItem.date} color={theme.text} />
+          </TouchableOpacity>
+        </TouchableOpacity>
+      ))
+    : [];
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <TextInput
+        <SearchInput
           style={styles.searchInput}
-          placeholder="English, Japanese, Romaji, words or text"
           onSubmitEditing={handleSubmitEditing}
-          onChangeText={onSearchInputChange}
         />
         <View style={styles.clearButtonView}>
-          <Button title="Clear history" color={lightGreen} />
+          <Button
+            title="Clear history"
+            color={lightGreen}
+            onPress={handleClearSearchHistoryButtonClick}
+          />
         </View>
-        <ScrollView>{searchHistory}</ScrollView>
+        <ScrollView>{searchHistoryElement}</ScrollView>
       </View>
     </TouchableWithoutFeedback>
   );

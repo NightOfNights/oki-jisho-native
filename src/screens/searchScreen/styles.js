@@ -19,14 +19,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginBottom: 10,
   },
+  searchHistoryWrapper: {
+    borderTopWidth: 1,
+    borderColor: basicWhite,
+  },
   searchHistory: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
-    borderTopWidth: 1,
-    borderColor: basicWhite,
-    paddingVertical: 15,
+    paddingVertical: 18,
   },
 });
 
