@@ -7,6 +7,7 @@ import {
   lightTag,
   darkTag,
 } from '../constants/colors';
+import { setThemeToLocalStorage, getTheme } from '../storage/asyncStorage';
 
 const darkThemeNavigation = {
   ...DefaultTheme,
@@ -23,6 +24,7 @@ const lightThemeNavigation = { ...DefaultTheme };
 
 const themes = {
   light: {
+    themeName: 'light',
     statusBarBackground: basicWhite,
     statusBarText: 'dark-content',
     text: basicBlack,
@@ -30,6 +32,7 @@ const themes = {
     tagColor: lightTag,
   },
   dark: {
+    themeName: 'dark',
     statusBarBackground: darkBlue,
     statusBarText: 'default',
     text: basicWhite,
@@ -42,23 +45,32 @@ export const ThemeContext = React.createContext(null);
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = React.useState(themes.light);
-  const [themeName, setThemeName] = React.useState('light');
+
+  const getThemeFromLocalStorage = async () => {
+    const themeValue = await getTheme();
+    setTheme(themeValue == 'dark' ? themes.dark : themes.light);
+  };
+
+  React.useEffect(() => {
+    getThemeFromLocalStorage();
+  }, []);
+
   const toggleTheme = (themeValue) => {
     if (themeValue === 'dark' || themeValue === 'light') {
       if (themeValue === 'dark') {
         setTheme(themes.dark);
-        setThemeName('dark');
+        setThemeToLocalStorage('dark');
       } else {
         setTheme(themes.light);
-        setThemeName('light');
+        setThemeToLocalStorage('light');
       }
     } else {
-      if (themeName === 'dark') {
+      if (theme.themeName === 'dark') {
         setTheme(themes.light);
-        setThemeName('light');
+        setThemeToLocalStorage('light');
       } else {
         setTheme(themes.dark);
-        setThemeName('dark');
+        setThemeToLocalStorage('dark');
       }
     }
   };
@@ -67,7 +79,8 @@ export const ThemeProvider = ({ children }) => {
     <ThemeContext.Provider
       value={{
         theme,
-        themeName: themeName.charAt(0).toUpperCase() + themeName.slice(1),
+        themeName:
+          theme.themeName.charAt(0).toUpperCase() + theme.themeName.slice(1),
         toggleTheme,
       }}
     >

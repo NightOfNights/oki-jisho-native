@@ -19,6 +19,7 @@ import styles from './styles';
 
 const SearchScreen = ({ navigation }) => {
   const [searchHistory, setSearchHistory] = React.useState([]);
+  const { theme } = React.useContext(ThemeContext);
 
   async function getSearchHistoryFromAsyncStorage() {
     const searchHistoryFromAsyncStorage = await getSearchHistory();
@@ -28,8 +29,6 @@ const SearchScreen = ({ navigation }) => {
   React.useEffect(() => {
     getSearchHistoryFromAsyncStorage();
   }, []);
-
-  const { theme } = React.useContext(ThemeContext);
 
   const navigateToResult = (query) => {
     navigation.navigate('Result', {
@@ -57,11 +56,7 @@ const SearchScreen = ({ navigation }) => {
 
   const searchHistoryElement = searchHistory
     ? searchHistory.map((searchHistoryItem) => (
-        <TouchableOpacity
-          key={searchHistoryItem.query}
-          style={styles.searchHistoryWrapper}
-          activeOpacity={1}
-        >
+        <View key={searchHistoryItem.query} style={styles.searchHistoryWrapper}>
           <TouchableOpacity
             onPress={() => navigateToResult(searchHistoryItem.query)}
             style={styles.searchHistory}
@@ -69,7 +64,7 @@ const SearchScreen = ({ navigation }) => {
             <ThemedText value={searchHistoryItem.query} color={theme.text} />
             <ThemedText value={searchHistoryItem.date} color={theme.text} />
           </TouchableOpacity>
-        </TouchableOpacity>
+        </View>
       ))
     : [];
 

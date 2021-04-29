@@ -3,6 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const maxSearchHistoryAmount = 20;
 const searchHistoryKey = 'searchHistory';
 
+const themeKey = 'theme';
+
 export const getSearchHistory = async () => {
   try {
     const searchHistory = await AsyncStorage.getItem(searchHistoryKey);
@@ -12,7 +14,10 @@ export const getSearchHistory = async () => {
   }
 };
 
-export const updateSearchHistory = async (searchHistoryItem, callback) => {
+export const updateSearchHistory = async (
+  searchHistoryItem,
+  updateSearchHistoryState
+) => {
   try {
     let currentSearchHistory = (await getSearchHistory()) || [];
 
@@ -35,7 +40,7 @@ export const updateSearchHistory = async (searchHistoryItem, callback) => {
       JSON.stringify(updatedSearchHistory)
     );
 
-    if (callback) callback();
+    if (updateSearchHistoryState) updateSearchHistoryState();
   } catch (error) {
     console.log(error.message);
   }
@@ -44,6 +49,23 @@ export const updateSearchHistory = async (searchHistoryItem, callback) => {
 export const clearSearchHistory = async () => {
   try {
     await AsyncStorage.removeItem(searchHistoryKey);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const setThemeToLocalStorage = async (theme) => {
+  try {
+    await AsyncStorage.setItem(themeKey, theme);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getTheme = async () => {
+  try {
+    const themeValue = await AsyncStorage.getItem(themeKey);
+    return themeValue;
   } catch (error) {
     console.log(error.message);
   }
