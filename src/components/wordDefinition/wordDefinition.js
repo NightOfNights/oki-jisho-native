@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import ThemedText from '../themedText/themedText';
 import ThemedTag from '../themedTag/themedTag';
 import styles from './styles';
@@ -11,8 +11,13 @@ const WordDefinition = ({
   senses,
   textColor,
   tagColor,
+  onHoldPress,
 }) => {
   const { word, reading } = japanese;
+
+  const handleHoldPress = () => {
+    onHoldPress(word ? word : reading);
+  };
 
   const definitionList = senses.map((sense, idx) => {
     const englishDefinitions = sense.english_definitions.join('; ');
@@ -37,37 +42,39 @@ const WordDefinition = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.leftContent}>
-        <View>
-          {word ? (
+      <TouchableOpacity onPress={handleHoldPress} style={styles.wrapper}>
+        <View style={styles.leftContent}>
+          <View>
+            {word ? (
+              <ThemedText
+                value={word}
+                color={textColor}
+                style={{ ...styles.wordText, ...styles.leftContentText }}
+              />
+            ) : undefined}
             <ThemedText
-              value={word}
+              value={reading}
               color={textColor}
-              style={{ ...styles.wordText, ...styles.leftContentText }}
+              style={
+                word
+                  ? { ...styles.readingText, ...styles.leftContentText }
+                  : { ...styles.wordText, ...styles.leftContentText }
+              }
             />
-          ) : undefined}
-          <ThemedText
-            value={reading}
-            color={textColor}
-            style={
-              word
-                ? { ...styles.readingText, ...styles.leftContentText }
-                : { ...styles.wordText, ...styles.leftContentText }
-            }
-          />
-          <View style={styles.tags}>
-            {jlpt.length ? (
-              <ThemedTag value={jlpt[0]} tagColor={tagColor} />
-            ) : undefined}
-            {common ? (
-              <ThemedTag value="common word" tagColor={tagColor} />
-            ) : undefined}
+            <View style={styles.tags}>
+              {jlpt.length ? (
+                <ThemedTag value={jlpt[0]} tagColor={tagColor} />
+              ) : undefined}
+              {common ? (
+                <ThemedTag value="common word" tagColor={tagColor} />
+              ) : undefined}
+            </View>
           </View>
         </View>
-      </View>
-      <View style={styles.rightContent}>
-        <View style={styles.definitions}>{definitionList}</View>
-      </View>
+        <View style={styles.rightContent}>
+          <View style={styles.definitions}>{definitionList}</View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };

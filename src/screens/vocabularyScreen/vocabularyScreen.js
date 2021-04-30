@@ -22,8 +22,8 @@ const VocabularyScreen = () => {
     },
   ];
 
-  const vocabulary = testData.map((vocabularyItem, idx) => (
-    <View key={`${vocabularyItem.word}+${idx}`} style={styles.vocabularyCard}>
+  const vocabulary = testData.map((vocabularyItem) => (
+    <View key={vocabularyItem.word} style={styles.vocabularyCard}>
       <View style={styles.textInfoView}>
         <ThemedText
           value={vocabularyItem.word}
@@ -37,12 +37,8 @@ const VocabularyScreen = () => {
         />
       </View>
       <View style={styles.tags}>
-        {vocabularyItem.tags.map((tag, idx) => (
-          <ThemedTag
-            key={`${tag}+${idx}`}
-            value={tag}
-            tagColor={theme.tagColor}
-          />
+        {vocabularyItem.tags.map((tag) => (
+          <ThemedTag key={tag} value={tag} tagColor={theme.tagColor} />
         ))}
       </View>
     </View>

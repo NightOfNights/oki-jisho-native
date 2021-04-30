@@ -5,6 +5,12 @@ import { lightGreen } from '../../constants/colors';
 import { useQuery } from 'react-query';
 import { ThemedText, WordDefinition } from '../../components';
 import { ThemeContext } from '../../providers/themeProvider';
+import {
+  insertIntoVocabulary,
+  readFromVocabulary,
+  updateRowInVocabulary,
+  deleteRowFromVocabulary,
+} from '../../storage/sqlite';
 import styles from './styles';
 
 const SearchResultScreen = ({ route }) => {
@@ -16,6 +22,14 @@ const SearchResultScreen = ({ route }) => {
     () => getWordDefinitions(searchQuery)
   );
 
+  const handleWordDefinitionHoldPress = (word) => {
+    console.log('clicked', word);
+    //deleteRowFromVocabulary(1);
+    //insertIntoVocabulary(word, 'test', 'test');
+    //updateRowInVocabulary(2, 'test2', 'test2');
+    readFromVocabulary();
+  };
+
   const words = data
     ? data.map((searchResult, idx) => (
         <WordDefinition
@@ -26,6 +40,7 @@ const SearchResultScreen = ({ route }) => {
           senses={searchResult.senses}
           textColor={theme.text}
           tagColor={theme.tagColor}
+          onHoldPress={handleWordDefinitionHoldPress}
         />
       ))
     : [];

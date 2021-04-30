@@ -3,13 +3,15 @@ import { gray, basicWhite } from '../../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'row',
     width: '100%',
     marginBottom: 10,
     paddingTop: 10,
     borderColor: basicWhite,
     borderTopWidth: 1,
+  },
+  wrapper: {
+    flex: 1,
+    flexDirection: 'row',
   },
   leftContent: {
     flex: 1,
