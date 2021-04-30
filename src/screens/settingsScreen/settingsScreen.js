@@ -7,7 +7,9 @@ import styles from './styles';
 
 const SettingsScreen = () => {
   const { theme, themeName, toggleTheme } = React.useContext(ThemeContext);
-  const [settingsTheme, setSettingsTheme] = React.useState(themeName);
+  const [settingsTheme, setSettingsTheme] = React.useState(
+    themeName.toLowerCase()
+  );
 
   const handlePickerValueChange = (value) => {
     if (value !== settingsTheme) {
