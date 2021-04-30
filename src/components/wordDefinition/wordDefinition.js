@@ -42,7 +42,7 @@ const WordDefinition = ({
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleHoldPress} style={styles.wrapper}>
+      <TouchableOpacity onLongPress={handleHoldPress} style={styles.wrapper}>
         <View style={styles.leftContent}>
           <View>
             {word ? (

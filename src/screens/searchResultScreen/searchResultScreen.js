@@ -3,7 +3,7 @@ import { Text, View, ActivityIndicator, ScrollView } from 'react-native';
 import { getWordDefinitions } from '../../api/apiRequests';
 import { lightGreen } from '../../constants/colors';
 import { useQuery } from 'react-query';
-import { ThemedText, WordDefinition } from '../../components';
+import { ThemedText, WordDefinition, VocabularyModal } from '../../components';
 import { ThemeContext } from '../../providers/themeProvider';
 import {
   insertIntoVocabulary,
@@ -14,20 +14,25 @@ import {
 import styles from './styles';
 
 const SearchResultScreen = ({ route }) => {
-  const { searchQuery } = route.params || '';
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const [modalData, setModalData] = React.useState([]);
   const { theme } = React.useContext(ThemeContext);
+
+  const { searchQuery } = route.params || '';
 
   const { isLoading, error, data } = useQuery(
     ['wordDefinitions', searchQuery],
     () => getWordDefinitions(searchQuery)
   );
 
-  const handleWordDefinitionHoldPress = (word) => {
+  const handleWordDefinitionHoldPress = (word, translation, tags) => {
     console.log('clicked', word);
-    //deleteRowFromVocabulary(1);
-    //insertIntoVocabulary(word, 'test', 'test');
-    //updateRowInVocabulary(2, 'test2', 'test2');
-    readFromVocabulary();
+    setModalData({ word, translation: 'asd', tags: 'ts' });
+    setIsModalVisible(true);
+  };
+
+  const handleModalCancelClick = () => {
+    setIsModalVisible(false);
   };
 
   const words = data
@@ -61,9 +66,7 @@ const SearchResultScreen = ({ route }) => {
           <ActivityIndicator size="large" color={lightGreen} />
         </View>
       ) : words.length ? (
-        <React.Fragment>
-          <ScrollView>{words}</ScrollView>
-        </React.Fragment>
+        <ScrollView>{words}</ScrollView>
       ) : (
         <View style={styles.noDefinitions}>
           <ThemedText
@@ -73,6 +76,15 @@ const SearchResultScreen = ({ route }) => {
           />
         </View>
       )}
+      <VocabularyModal
+        modalTitle="Add to vocabulary"
+        isVisible={isModalVisible}
+        word={modalData.word}
+        translation={modalData.translation}
+        tags={modalData.tags}
+        textColor={theme.text}
+        onCancelClick={handleModalCancelClick}
+      />
     </View>
   );
 };

@@ -7,3 +7,5 @@ export const transparent = 'transparent';
 export const lightTag = '#DEDEDE';
 export const darkTag = '#2B4258';
 export const textInputBorderShadow = 'rgba(0, 0, 0, 0.25)';
+export const modalShadow = '#000';
+export const modalBg = '#FAFAFA';
