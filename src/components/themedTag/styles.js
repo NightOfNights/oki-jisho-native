@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 10,
     marginTop: 3,
+    marginHorizontal: 1,
   },
   tagText: {
     color: lightGreen,

@@ -11,40 +11,27 @@ export const createVocabularyTable = () => {
 };
 
 export const readFromVocabulary = (updateVocabularyState) => {
-  db.transaction(
-    (tx) => {
-      tx.executeSql('select * from vocabulary', [], (_, { rows }) =>
-        console.log(JSON.stringify(rows))
-      );
-    },
-    null,
-    updateVocabularyState
-      ? (_, { rows: { _array } }) => updateVocabularyState(_array)
-      : null
-  );
+  db.transaction((tx) => {
+    tx.executeSql(
+      'select * from vocabulary',
+      [],
+      updateVocabularyState
+        ? (_, { rows: { _array } }) => updateVocabularyState(_array)
+        : null
+    );
+  });
 };
 
-export const insertIntoVocabulary = (
-  word,
-  translation,
-  tags,
-  updateVocabularyState
-) => {
-  db.transaction(
-    (tx) => {
-      tx.executeSql(
-        'insert into vocabulary (word, translation, tags) values (?, ?, ?)',
-        [word, translation, tags]
-      );
-      tx.executeSql('select * from vocabulary', [], (_, { rows }) =>
-        console.log(JSON.stringify(rows))
-      );
-    },
-    null,
-    updateVocabularyState
-      ? (_, { rows: { _array } }) => console.log(_array)
-      : null
-  );
+export const insertIntoVocabulary = (word, translation, tags) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      'insert into vocabulary (word, translation, tags) values (?, ?, ?)',
+      [word, translation, tags]
+    );
+    tx.executeSql('select * from vocabulary', [], (_, { rows }) =>
+      console.log(JSON.stringify(rows))
+    );
+  });
 };
 
 export const updateRowInVocabulary = (
@@ -53,28 +40,25 @@ export const updateRowInVocabulary = (
   tags,
   updateVocabularyState
 ) => {
-  db.transaction(
-    (tx) => {
-      tx.executeSql(
-        'update vocabulary set translation = ?, tags = ? where id = ?;',
-        [translation, tags, id]
-      );
-    },
-    null,
-    updateVocabularyState
-      ? (_, { rows: { _array } }) => console.log(_array)
-      : null
-  );
+  db.transaction((tx) => {
+    tx.executeSql(
+      'update vocabulary set translation = ?, tags = ? where id = ?;',
+      [translation, tags, id],
+      updateVocabularyState
+        ? (_, { rows: { _array } }) => console.log(_array)
+        : null
+    );
+  });
 };
 
 export const deleteRowFromVocabulary = (id, updateVocabularyState) => {
-  db.transaction(
-    (tx) => {
-      tx.executeSql('delete from vocabulary where id = ?;', [id]);
-    },
-    null,
-    updateVocabularyState
-      ? (_, { rows: { _array } }) => console.log(_array)
-      : null
-  );
+  db.transaction((tx) => {
+    tx.executeSql(
+      'delete from vocabulary where id = ?;',
+      [id],
+      updateVocabularyState
+        ? (_, { rows: { _array } }) => console.log(_array)
+        : null
+    );
+  });
 };

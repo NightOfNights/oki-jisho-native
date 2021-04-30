@@ -10,16 +10,31 @@ const VocabularyModal = ({
   word,
   translation,
   tags,
-  textColor,
-  onCancelClick,
+  onClickCancel,
+  onClickOk,
 }) => {
   const [wordTranslation, setWordTranslation] = React.useState(
     translation || ''
   );
   const [wordTags, setWordTags] = React.useState(tags || '');
 
-  const handleCancelClick = () => {
-    onCancelClick();
+  React.useEffect(() => {
+    setWordTranslation(translation);
+    setWordTags(tags);
+  }, [translation, tags]);
+
+  const handleClickCancel = () => {
+    onClickCancel();
+  };
+
+  const handleClickOk = () => {
+    onClickOk(
+      word,
+      wordTranslation ? wordTranslation : 'No translation',
+      wordTags ? wordTags : ''
+    );
+    setWordTranslation('');
+    setWordTags('');
   };
 
   return (
@@ -58,12 +73,12 @@ const VocabularyModal = ({
             <View style={styles.buttonContainer}>
               <Button
                 title="Cancel"
-                onPress={handleCancelClick}
+                onPress={handleClickCancel}
                 color={lightGreen}
               />
             </View>
             <View style={styles.buttonContainer}>
-              <Button title="Ok" color={lightGreen} />
+              <Button title="Ok" onPress={handleClickOk} color={lightGreen} />
             </View>
           </View>
         </View>

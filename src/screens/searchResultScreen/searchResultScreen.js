@@ -5,12 +5,7 @@ import { lightGreen } from '../../constants/colors';
 import { useQuery } from 'react-query';
 import { ThemedText, WordDefinition, VocabularyModal } from '../../components';
 import { ThemeContext } from '../../providers/themeProvider';
-import {
-  insertIntoVocabulary,
-  readFromVocabulary,
-  updateRowInVocabulary,
-  deleteRowFromVocabulary,
-} from '../../storage/sqlite';
+import { insertIntoVocabulary } from '../../storage/sqlite';
 import styles from './styles';
 
 const SearchResultScreen = ({ route }) => {
@@ -25,14 +20,21 @@ const SearchResultScreen = ({ route }) => {
     () => getWordDefinitions(searchQuery)
   );
 
-  const handleWordDefinitionHoldPress = (word, translation, tags) => {
+  const handleWordDefinitionHoldPress = (word) => {
     console.log('clicked', word);
-    setModalData({ word, translation: 'asd', tags: 'ts' });
+    setModalData({
+      word,
+    });
     setIsModalVisible(true);
   };
 
-  const handleModalCancelClick = () => {
+  const handleModalClickCancel = () => {
     setIsModalVisible(false);
+  };
+
+  const handleModalClickOk = (word, translation, tags) => {
+    setIsModalVisible(false);
+    insertIntoVocabulary(word, translation, tags);
   };
 
   const words = data
@@ -82,8 +84,8 @@ const SearchResultScreen = ({ route }) => {
         word={modalData.word}
         translation={modalData.translation}
         tags={modalData.tags}
-        textColor={theme.text}
-        onCancelClick={handleModalCancelClick}
+        onClickCancel={handleModalClickCancel}
+        onClickOk={handleModalClickOk}
       />
     </View>
   );

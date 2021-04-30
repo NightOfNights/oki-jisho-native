@@ -8,41 +8,53 @@ import {
 } from 'react-native';
 import { ThemedText, ThemedTag } from '../../components';
 import { ThemeContext } from '../../providers/themeProvider';
+import { readFromVocabulary } from '../../storage/sqlite';
+import { useIsFocused } from '@react-navigation/native';
 import styles from './styles';
 
 const VocabularyScreen = () => {
   const { theme } = React.useContext(ThemeContext);
+  const [vocabularyData, setVocabularyData] = React.useState([]);
+  const isFocused = useIsFocused();
 
-  const testData = [
-    { word: '猫', englishTranslation: 'cat', tags: ['animal', 'N5'] },
-    {
-      word: '首相',
-      englishTranslation: 'Prime minister',
-      tags: ['profession', 'N3'],
-    },
-  ];
+  React.useEffect(() => {
+    if (isFocused) {
+      console.log(isFocused);
+      readFromVocabulary(setVocabularyData);
+    }
+  }, [isFocused]);
 
-  const vocabulary = testData.map((vocabularyItem) => (
-    <View key={vocabularyItem.word} style={styles.vocabularyCard}>
-      <View style={styles.textInfoView}>
-        <ThemedText
-          value={vocabularyItem.word}
-          color={theme.text}
-          style={styles.textInfo}
-        />
-        <ThemedText
-          value={vocabularyItem.englishTranslation}
-          color={theme.text}
-          style={styles.textInfo}
-        />
-      </View>
-      <View style={styles.tags}>
-        {vocabularyItem.tags.map((tag) => (
-          <ThemedTag key={tag} value={tag} tagColor={theme.tagColor} />
-        ))}
-      </View>
-    </View>
-  ));
+  const vocabulary = vocabularyData
+    ? vocabularyData.map((vocabularyItem) => (
+        <View key={vocabularyItem.word} style={styles.vocabularyCard}>
+          <View style={styles.textInfoView}>
+            <ThemedText
+              value={vocabularyItem.word}
+              color={theme.text}
+              style={styles.textInfo}
+            />
+            <ThemedText
+              value={vocabularyItem.translation}
+              color={theme.text}
+              style={styles.textInfo}
+            />
+          </View>
+          <View style={styles.tags}>
+            {vocabularyItem.tags
+              ? vocabularyItem.tags
+                  .split(',')
+                  .map((tag) => (
+                    <ThemedTag
+                      key={tag}
+                      value={tag}
+                      tagColor={theme.tagColor}
+                    />
+                  ))
+              : null}
+          </View>
+        </View>
+      ))
+    : null;
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
