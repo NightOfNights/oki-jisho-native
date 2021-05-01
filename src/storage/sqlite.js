@@ -19,6 +19,9 @@ export const readFromVocabulary = (updateVocabularyState) => {
         ? (_, { rows: { _array } }) => updateVocabularyState(_array)
         : null
     );
+    tx.executeSql('select * from vocabulary', [], (_, { rows }) =>
+      console.log(JSON.stringify(rows))
+    );
   });
 };
 
@@ -43,9 +46,13 @@ export const updateRowInVocabulary = (
   db.transaction((tx) => {
     tx.executeSql(
       'update vocabulary set translation = ?, tags = ? where id = ?;',
-      [translation, tags, id],
+      [translation, tags, id]
+    );
+    tx.executeSql(
+      'select * from vocabulary',
+      [],
       updateVocabularyState
-        ? (_, { rows: { _array } }) => console.log(_array)
+        ? (_, { rows: { _array } }) => updateVocabularyState(_array)
         : null
     );
   });
@@ -53,11 +60,12 @@ export const updateRowInVocabulary = (
 
 export const deleteRowFromVocabulary = (id, updateVocabularyState) => {
   db.transaction((tx) => {
+    tx.executeSql('delete from vocabulary where id = ?;', [id]);
     tx.executeSql(
-      'delete from vocabulary where id = ?;',
-      [id],
+      'select * from vocabulary',
+      [],
       updateVocabularyState
-        ? (_, { rows: { _array } }) => console.log(_array)
+        ? (_, { rows: { _array } }) => updateVocabularyState(_array)
         : null
     );
   });

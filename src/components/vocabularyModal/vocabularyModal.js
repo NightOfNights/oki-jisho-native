@@ -1,17 +1,20 @@
 import * as React from 'react';
-import { Modal, View, Button, TextInput } from 'react-native';
+import { Modal, View, Button, TextInput, Alert } from 'react-native';
 import ThemedText from '../themedText/themedText';
-import { lightGreen } from '../../constants/colors';
+import { lightGreen, red } from '../../constants/colors';
 import styles from './styles';
 
 const VocabularyModal = ({
   isVisible,
   modalTitle,
+  edit,
+  id,
   word,
   translation,
   tags,
   onClickCancel,
   onClickOk,
+  onClickDelete,
 }) => {
   const [wordTranslation, setWordTranslation] = React.useState(
     translation || ''
@@ -28,13 +31,36 @@ const VocabularyModal = ({
   };
 
   const handleClickOk = () => {
-    onClickOk(
-      word,
-      wordTranslation ? wordTranslation : 'No translation',
-      wordTags ? wordTags : ''
-    );
-    setWordTranslation('');
-    setWordTags('');
+    if (edit) {
+      onClickOk(
+        id,
+        wordTranslation ? wordTranslation : 'No translation',
+        wordTags ? wordTags : ''
+      );
+    } else {
+      onClickOk(
+        word,
+        wordTranslation ? wordTranslation : 'No translation',
+        wordTags ? wordTags : ''
+      );
+      setWordTranslation('');
+      setWordTags('');
+    }
+  };
+
+  const handleClickDelete = () => {
+    Alert.alert('Alert', `Delete ${word} from vocabulary?`, [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          onClickDelete(id);
+        },
+      },
+    ]);
   };
 
   return (
@@ -69,6 +95,17 @@ const VocabularyModal = ({
               style={styles.modalInput}
             />
           </View>
+          {edit ? (
+            <View style={styles.buttons}>
+              <View style={styles.buttonContainer}>
+                <Button
+                  title="Delete"
+                  onPress={handleClickDelete}
+                  color={red}
+                />
+              </View>
+            </View>
+          ) : null}
           <View style={styles.buttons}>
             <View style={styles.buttonContainer}>
               <Button

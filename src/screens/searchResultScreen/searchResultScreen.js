@@ -81,9 +81,7 @@ const SearchResultScreen = ({ route }) => {
       <VocabularyModal
         modalTitle="Add to vocabulary"
         isVisible={isModalVisible}
-        word={modalData.word}
-        translation={modalData.translation}
-        tags={modalData.tags}
+        {...modalData}
         onClickCancel={handleModalClickCancel}
         onClickOk={handleModalClickOk}
       />

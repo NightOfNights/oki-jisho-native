@@ -2,6 +2,7 @@ export const lightGreen = '#17BF63';
 export const darkBlue = '#213243';
 export const basicWhite = '#FFFFFF';
 export const basicBlack = '#000000';
+export const red = '#E0245E';
 export const gray = '#979797';
 export const transparent = 'transparent';
 export const lightTag = '#DEDEDE';
