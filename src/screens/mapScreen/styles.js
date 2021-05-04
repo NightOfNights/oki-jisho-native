@@ -1,7 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+import { basicWhite } from '../../constants/colors';
 
 const styles = StyleSheet.create({
-  mapPlaceholder: { flex: 1, resizeMode: 'cover', width: 425 },
+  container: {
+    flex: 1,
+    backgroundColor: basicWhite,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
 });
 
 export default styles;
