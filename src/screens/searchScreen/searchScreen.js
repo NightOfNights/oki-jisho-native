@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { lightGreen } from '../../constants/colors';
-import { ThemeContext } from '../../providers/themeProvider';
+import { useThemeContext } from '../../hooks/useThemeContext';
 import { ThemedText, SearchInput } from '../../components';
 import {
   getSearchHistory,
@@ -19,7 +19,7 @@ import styles from './styles';
 
 const SearchScreen = ({ navigation }) => {
   const [searchHistory, setSearchHistory] = React.useState([]);
-  const { theme } = React.useContext(ThemeContext);
+  const { theme } = useThemeContext();
 
   async function getSearchHistoryFromAsyncStorage() {
     const searchHistoryFromAsyncStorage = await getSearchHistory();

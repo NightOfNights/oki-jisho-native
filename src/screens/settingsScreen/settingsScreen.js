@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { ThemedText } from '../../components';
-import { ThemeContext } from '../../providers/themeProvider';
+import { useThemeContext } from '../../hooks/useThemeContext';
 import { Picker } from '@react-native-picker/picker';
 import styles from './styles';
 
 const SettingsScreen = () => {
-  const { theme, themeName, toggleTheme } = React.useContext(ThemeContext);
+  const { theme, themeName, toggleTheme } = useThemeContext();
   const [settingsTheme, setSettingsTheme] = React.useState(
     themeName.toLowerCase()
   );

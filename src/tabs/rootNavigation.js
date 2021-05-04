@@ -12,7 +12,7 @@ import {
   SearchResultScreen,
 } from '../screens';
 import { lightGreen } from '../constants/colors';
-import { ThemeContext } from '../providers/themeProvider';
+import { useThemeContext } from '../hooks/useThemeContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -53,7 +53,7 @@ const SearchNavigator = () => {
 };
 
 const RootNavigation = () => {
-  const { theme } = React.useContext(ThemeContext);
+  const { theme } = useThemeContext();
 
   return (
     <NavigationContainer theme={theme.navigation}>

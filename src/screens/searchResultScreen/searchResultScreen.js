@@ -4,14 +4,14 @@ import { getWordDefinitions } from '../../api/apiRequests';
 import { lightGreen } from '../../constants/colors';
 import { useQuery } from 'react-query';
 import { ThemedText, WordDefinition, VocabularyModal } from '../../components';
-import { ThemeContext } from '../../providers/themeProvider';
+import { useThemeContext } from '../../hooks/useThemeContext';
 import { insertIntoVocabulary } from '../../storage/sqlite';
 import styles from './styles';
 
 const SearchResultScreen = ({ route }) => {
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [modalData, setModalData] = React.useState([]);
-  const { theme } = React.useContext(ThemeContext);
+  const { theme } = useThemeContext();
 
   const { searchQuery } = route.params || '';
 

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { ThemedText, ThemedTag, VocabularyModal } from '../../components';
-import { ThemeContext } from '../../providers/themeProvider';
+import { useThemeContext } from '../../hooks/useThemeContext';
 import {
   readFromVocabulary,
   updateRowInVocabulary,
@@ -18,7 +18,7 @@ import { useIsFocused } from '@react-navigation/native';
 import styles from './styles';
 
 const VocabularyScreen = () => {
-  const { theme } = React.useContext(ThemeContext);
+  const { theme } = useThemeContext();
   const [vocabularyData, setVocabularyData] = React.useState([]);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [modalData, setModalData] = React.useState({});
