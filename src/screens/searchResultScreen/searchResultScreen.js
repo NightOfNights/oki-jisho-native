@@ -52,10 +52,6 @@ const SearchResultScreen = ({ route }) => {
       ))
     : [];
 
-  if (error) {
-    return <Text>Error</Text>;
-  }
-
   return (
     <View style={styles.container}>
       <ThemedText
@@ -66,6 +62,14 @@ const SearchResultScreen = ({ route }) => {
       {isLoading ? (
         <View style={styles.loadingIndicatior}>
           <ActivityIndicator size="large" color={lightGreen} />
+        </View>
+      ) : error ? (
+        <View style={styles.noDefinitions}>
+          <ThemedText
+            value="Error! Check your Internet connection"
+            color={theme.text}
+            style={styles.noDefinitionsText}
+          />
         </View>
       ) : words.length ? (
         <ScrollView>{words}</ScrollView>
