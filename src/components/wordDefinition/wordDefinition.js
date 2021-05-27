@@ -13,11 +13,12 @@ const WordDefinition = ({
   tagColor,
   onHoldPress,
 }) => {
-  const { word, reading } = japanese;
-
   const handleHoldPress = () => {
-    onHoldPress(word ? word : reading);
+    onHoldPress(wordText ? wordText : reading);
   };
+
+  const { word, reading } = japanese;
+  const wordText = reading ? `${word}(${reading})` : word;
 
   const definitionList = senses.map((sense, idx) => {
     const englishDefinitions = sense.english_definitions.join('; ');
@@ -34,7 +35,7 @@ const WordDefinition = ({
           />
           {info.split(' ').join('') ? (
             <Text style={styles.infoText}>{` ${info}`}</Text>
-          ) : undefined}
+          ) : null}
         </Text>
       </View>
     );
@@ -51,7 +52,7 @@ const WordDefinition = ({
                 color={textColor}
                 style={{ ...styles.wordText, ...styles.leftContentText }}
               />
-            ) : undefined}
+            ) : null}
             <ThemedText
               value={reading}
               color={textColor}
@@ -64,10 +65,10 @@ const WordDefinition = ({
             <View style={styles.tags}>
               {jlpt.length ? (
                 <ThemedTag value={jlpt[0]} tagColor={tagColor} />
-              ) : undefined}
+              ) : null}
               {common ? (
                 <ThemedTag value="common word" tagColor={tagColor} />
-              ) : undefined}
+              ) : null}
             </View>
           </View>
         </View>
