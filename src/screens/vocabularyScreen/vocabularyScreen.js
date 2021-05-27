@@ -77,7 +77,7 @@ const VocabularyScreen = () => {
                 <ThemedText
                   value={vocabularyItem.word}
                   color={theme.text}
-                  style={styles.textInfo}
+                  style={{ ...styles.textInfo, ...styles.word }}
                 />
                 <ThemedText
                   value={vocabularyItem.translation}
