@@ -31,7 +31,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   word: {
-    flex: 4,
+    flex: 2,
+  },
+  translation: {
+    textAlign: 'right',
   },
   tags: {
     flexWrap: 'wrap',
